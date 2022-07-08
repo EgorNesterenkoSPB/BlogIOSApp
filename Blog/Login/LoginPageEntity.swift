@@ -13,3 +13,11 @@ struct Account:Codable {
     let password:String
 }
 
+
+struct EmailData:Decodable {
+    let isValid:Bool
+    
+    enum CodingKeys:String,CodingKey {
+        case isValid = "format_valid"
+    }
+}

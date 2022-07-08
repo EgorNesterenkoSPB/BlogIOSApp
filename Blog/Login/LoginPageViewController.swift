@@ -26,6 +26,7 @@ final class LoginViewController:UIViewController {
     var email = ""
     var password = ""
     var isRegister:Bool = false
+    var isValidEmainDomenAddress:Bool = false
     let defaults = UserDefaults.standard
     
     var presenter: (ViewToPresenterLoginProtocol & InteractorToPresenterLoginProtocol)?
@@ -54,8 +55,9 @@ final class LoginViewController:UIViewController {
         userPasswordEntry.delegate = self
         userPasswordEntry.isSecureTextEntry = true
         
+        loginButton.isEnabled = false
         loginButton.setTitle("Register", for: .normal)
-        loginButton.backgroundColor = .black
+        loginButton.backgroundColor = .lightGray
         loginButton.tintColor = .white
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.layer.cornerRadius = 8
@@ -139,6 +141,7 @@ final class LoginViewController:UIViewController {
         
         }
         else {
+            if isValidEmainDomenAddress{
             
             guard self.email.count != 0 && self.password.count != 0 && self.email != " " && self.password != " " else {
             let bounds = loginButton.bounds
@@ -165,8 +168,12 @@ final class LoginViewController:UIViewController {
             return}
             
             presenter?.userSelectRegister(email: email, password: password)
+         }
+            else {
+                return
+            }
         }
-    }
+     }
 }
 
 
@@ -183,18 +190,27 @@ extension LoginViewController:UITextFieldDelegate {
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        
         switch textField.tag {
         case 0:
             if let emailText = textField.text {
                 self.email = emailText
+                self.presenter?.ValidEmailAddressDomen(email: emailText)
+                loginButton.isEnabled = true
             }
         case 1:
             if let passwordText = textField.text{
                 self.password = passwordText
+                loginButton.isEnabled = true
+                if isRegister {
+                    self.loginButton.backgroundColor = .black
+                }
             }
         default:
             break
         }
+        
+        
         return true
     }
     
@@ -204,6 +220,7 @@ extension LoginViewController:UITextFieldDelegate {
         case 0:
             if let emailText = textField.text {
                 self.email = emailText
+                self.presenter?.ValidEmailAddressDomen(email: emailText)
             }
         case 1:
             if let passwordText = textField.text{
@@ -218,6 +235,22 @@ extension LoginViewController:UITextFieldDelegate {
 
 //MARK: - PresenterToViewProtocol
 extension LoginViewController:PresenterToViewLoginProtocol {
+    func onSuccessValidEmailAddressDomen() {
+        self.loginButton.backgroundColor = .black
+        self.isValidEmainDomenAddress = true
+        return
+    }
+    
+    func onFailureValiedEmailAddressDomen(error: String) {
+        errorLabel.removeFromSuperview()
+        setupLabel(label: errorLabel, text: error, color: .red, scrollView: scrollView)
+        
+        NSLayoutConstraint.activate([
+            errorLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor,constant: 10),
+            errorLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+        ])
+    }
+    
     func onFailureLogin(error: String) {
         present(errorAC(error),animated: true,completion: nil)
     }
@@ -231,7 +264,7 @@ extension LoginViewController:PresenterToViewLoginProtocol {
     }
     
     func onSuccessfulRegister() {
-        presenter?.succesfulRegister()
+        presenter?.successfulRegister()
     }
     
 }

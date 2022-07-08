@@ -16,6 +16,7 @@ protocol ViewToPresenterLoginProtocol {
     var router: PresenterToRouterLoginProtocol?{get set}
     func userSelectRegister(email:String,password:String)
     func userSelectLogin(password:String)
+    func ValidEmailAddressDomen(email:String)
 }
 
 //MARK: - View output (Presenter -> View)
@@ -24,6 +25,8 @@ protocol PresenterToViewLoginProtocol:AnyObject {
     func onSuccessfulRegister()
     func onFailureLogin(error:String)
     func onFailureRegister(error:String)
+    func onSuccessValidEmailAddressDomen()
+    func onFailureValiedEmailAddressDomen(error:String)
 }
 
 //MARK: - Interactor Input (Presenter -> Interactor)
@@ -31,14 +34,17 @@ protocol PresenterToInteractorLoginProtocol {
     var presenter: InteractorToPresenterLoginProtocol? {get set}
     func login(password:String)
     func register(email:String,password:String)
+    func isValidEmailAddressDomen(email:String)
 }
 
 //MARK: - Interactor Output (Interactor -> Presenter)
 protocol InteractorToPresenterLoginProtocol {
     func successfulLogin()
-    func succesfulRegister()
+    func successfulRegister()
     func failureLogin(error:String)
     func failureRegister(error:String)
+    func successfulValidEmailAddressDomen()
+    func failureValidEmailAddressDomen(error:String)
     
 }
 

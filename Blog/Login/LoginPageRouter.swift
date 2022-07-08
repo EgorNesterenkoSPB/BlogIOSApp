@@ -29,9 +29,11 @@ final class LoginAccoutRouter:PresenterToRouterLoginProtocol {
     }
     
     func pushToMainView(on view: PresenterToViewLoginProtocol?) {
+                    DispatchQueue.main.async {
         if let mainVC = MainViewRouter.createModule() {
             let viewController = view as! LoginViewController
             viewController.navigationController?.pushViewController(mainVC, animated: true)
+            }
         }
     }
     

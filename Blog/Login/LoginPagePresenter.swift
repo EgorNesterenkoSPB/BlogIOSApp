@@ -9,6 +9,8 @@
 import Foundation
 
 final class LoginAccountPresenter:ViewToPresenterLoginProtocol {
+    
+    
     var view: PresenterToViewLoginProtocol?
     var interactor: PresenterToInteractorLoginProtocol?
     var router: PresenterToRouterLoginProtocol?
@@ -21,14 +23,26 @@ final class LoginAccountPresenter:ViewToPresenterLoginProtocol {
     func userSelectLogin(password: String) {
         interactor?.login(password: password)
     }
+    
+    func ValidEmailAddressDomen(email: String) {
+        interactor?.isValidEmailAddressDomen(email: email)
+    }
 }
 
 extension LoginAccountPresenter:InteractorToPresenterLoginProtocol {
+    func successfulValidEmailAddressDomen() {
+        view?.onSuccessValidEmailAddressDomen()
+    }
+    
+    func failureValidEmailAddressDomen(error: String) {
+        view?.onFailureValiedEmailAddressDomen(error: error)
+    }
+    
     func successfulLogin() {
         router?.pushToMainView(on: view)
     }
     
-    func succesfulRegister() {
+    func successfulRegister() {
         router?.pushToMainView(on: view)
     }
     
