@@ -98,16 +98,16 @@ final class LoginAccountInteractor:PresenterToInteractorLoginProtocol {
 //
 //    }
     
-    private func parseJSON(_ emailData:Data) -> EmailData? {
-        let decoder = JSONDecoder()
-        do {
-            let decodedData = try decoder.decode(EmailData.self, from: emailData)
-            let decodedEmailData = EmailData(isValid:decodedData.isValid)
-            return decodedEmailData
-        } catch  {
-            return nil
-        }
-    }
+//    private func parseJSON(_ emailData:Data) -> EmailData? {
+//        let decoder = JSONDecoder()
+//        do {
+//            let decodedData = try decoder.decode(EmailData.self, from: emailData)
+//            let decodedEmailData = EmailData(isValid:decodedData.isValid)
+//            return decodedEmailData
+//        } catch  {
+//            return nil
+//        }
+//    }
     
     func fetchEmailValidCombine(email:String) -> Future<EmailData,Error> {
         
