@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct Note {
+    var text:String
+    var photoPath:String
+    var weather:String
+    var feels:String
+}
