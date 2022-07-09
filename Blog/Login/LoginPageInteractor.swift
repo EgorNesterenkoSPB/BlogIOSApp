@@ -37,7 +37,15 @@ final class LoginAccountInteractor:PresenterToInteractorLoginProtocol {
             case .failure(let error):
                 self?.presenter?.failureRegister(error: "\(error)")
             case .finished:
-                self?.presenter?.successfulRegister()
+                let rootAccount = Account(email: email, password: password)
+                if let encoded = try? JSONEncoder().encode(rootAccount) {
+                    self?.defaults.set(encoded, forKey: Constant.accountKey)
+                    self?.defaults.set(true,forKey: Constant.loginSuccess)
+                    self?.presenter?.successfulRegister()
+                }
+                else {
+                    self?.presenter?.failureRegister(error: "Coudnt save account, try again")
+                }
             }
         }, receiveValue: { data in
             print(data)

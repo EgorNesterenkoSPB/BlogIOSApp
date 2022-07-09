@@ -21,6 +21,6 @@ class NoteCollectionViewCell: UICollectionViewCell {
     }
     
     func setupCell() {
-        self.backgroundColor = .lightGray
+        self.backgroundColor = UIColor(named: Constant.backgroundNoteCell)
     }
 }

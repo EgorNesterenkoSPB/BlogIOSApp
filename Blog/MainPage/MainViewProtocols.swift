@@ -15,21 +15,26 @@ protocol ViewToPresenterMainViewProtocol {
     var interactor: PresenterToInteractorMainViewProtocol?{get set}
     var router: PresenterToRouterMainViewProtocol? {get set}
     
+    func userSelectCreateNote()
+    
 }
 
 //MARK: - View Output (Presenter -> View)
 protocol PresenterToViewMainViewProtocol {
-    
+    func onSuccessCreateNote()
+    func onFailureCreateNote()
 }
 
 //MARK: - Interactor Input (Presenter -> Interactor)
 protocol PresenterToInteractorMainViewProtocol {
     var presenter:InteractorToPresenterMainViewProtocol? {get set}
+    func createNote()
 }
 
 //MARK: - Interactor Output (Interactor -> Presenter)
 protocol InteractorToPresenterMainViewProtocol {
-    
+    func successfulCreatedNote()
+    func failureCreatedNote()
 }
 
 //MARK: - Router Input (Presenter -> Router)

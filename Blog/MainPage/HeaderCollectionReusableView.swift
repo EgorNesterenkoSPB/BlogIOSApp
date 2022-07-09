@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol HeaderCollectionReusableViewProtocol {
+    func showSlideMenu()
+    func openCreatingNoteView()
+}
+
 class HeaderCollectionReusableView: UICollectionReusableView {
         
     static let identefier = "headerCollectionReusableView"
@@ -15,6 +20,8 @@ class HeaderCollectionReusableView: UICollectionReusableView {
     private let createNoteButton = UIButton()
     private let titleLabel = UILabel()
     private let slideMenuButton = UIButton()
+    
+    var delegate:HeaderCollectionReusableViewProtocol?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +32,7 @@ class HeaderCollectionReusableView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup() {
+    func setup(mainViewVC:MainViewController) {
         self.backgroundColor = UIColor(named: Constant.backgroundColor)
         
         titleLabel.text = "Notes"
@@ -39,12 +46,14 @@ class HeaderCollectionReusableView: UICollectionReusableView {
         slideMenuButton.imageView?.tintColor = .black
         slideMenuButton.setImage(UIImage(systemName: "list.bullet"), for: .normal)
         slideMenuButton.imageView?.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5)
+        slideMenuButton.addTarget(self, action: #selector(showSlideMenu(_:)), for: .touchUpInside)
         self.addSubview(slideMenuButton)
         
         createNoteButton.translatesAutoresizingMaskIntoConstraints = false
         createNoteButton.imageView?.tintColor = .black
         createNoteButton.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         createNoteButton.imageView?.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5)
+        createNoteButton.addTarget(self, action: #selector(openCreatingNoteView(_:)), for: .touchUpInside)
         self.addSubview(createNoteButton)
         
         NSLayoutConstraint.activate([
@@ -56,6 +65,14 @@ class HeaderCollectionReusableView: UICollectionReusableView {
             createNoteButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
         
+    }
+    
+    @objc func showSlideMenu(_ sender:UIButton) {
+        delegate?.showSlideMenu()
+    }
+    
+    @objc func openCreatingNoteView(_ sender:UIButton) {
+        delegate?.openCreatingNoteView()
     }
     
     

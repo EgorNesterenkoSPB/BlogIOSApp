@@ -9,13 +9,25 @@
 import Foundation
 
 final class MainViewPresenter:ViewToPresenterMainViewProtocol {
+    
     var view: PresenterToViewMainViewProtocol?
     var interactor: PresenterToInteractorMainViewProtocol?
     var router: PresenterToRouterMainViewProtocol?
     
+    func userSelectCreateNote() {
+        
+    }
     
 }
 
 extension MainViewPresenter: InteractorToPresenterMainViewProtocol {
+    func successfulCreatedNote() {
+        
+    }
+    
+    func failureCreatedNote() {
+        
+    }
+    
     
 }

@@ -9,6 +9,10 @@
 import Foundation
 
 final class MainViewInteractor: PresenterToInteractorMainViewProtocol {
+    func createNote() {
+        
+    }
+    
     var presenter: InteractorToPresenterMainViewProtocol?
     
     

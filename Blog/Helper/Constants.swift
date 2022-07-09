@@ -15,4 +15,5 @@ struct Constant {
     static let accountKey = "password"
     static let placeholderTag:Int = 555
     static let networkEmailKey:String = "f799f028f328b22a85a67712c94c1ee0"
+    static let backgroundNoteCell = "noteBackgroundCell"
 }
